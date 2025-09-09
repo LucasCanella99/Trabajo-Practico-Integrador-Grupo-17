@@ -1,2 +1,14 @@
-# Trabajo-Practico-Integrador-Grupo-17
+# Trabajo práctico integrador
+
+---
+
+## Grupo: 17
+
+---
+
+### Integrantes:
+
+- Lucas Canella
+- Raul Anriquez
+- Pablo Blanco
 
