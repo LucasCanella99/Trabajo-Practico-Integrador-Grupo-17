@@ -22,5 +22,19 @@ class ServidorCorreo:
     def recibir_mensaje(self):
         pass
 
-    def listar_mensajes(self):
-        pass
+    def listar_mensajes(self,email):
+        if email not in self.__usuarios:#verificamos que el email para listar los mensajes exista
+            raise ValueError('El usuario no existe.')
+        usuario = self.__usuarios[email] #accedemos al usuario en la lista(Ya registrado)
+        bandeja_de_entrada = usuario.get_bandeja_entrada()#Accedemos a la bandeja de entrada de Usuario con su getter, que es un objeto de Carpeta (bandeja de entrada)
+        if bandeja_de_entrada is None:
+            raise ValueError('El usuario no tiene una bandeja de entrada')
+        
+        mensajes = bandeja_de_entrada.get_mensajes()#Usamos el getter de Usuario para poder tener los mensajes
+        if not mensajes:
+            print('El usuario no tiene mensajes')
+        else:
+            print(f'Mensajes del usuario: {email} \n')
+            for mensaje in mensajes:
+                print(mensaje)# usamos el str de la clase Mensaje
+
