@@ -1,4 +1,5 @@
 from mensaje import Mensaje
+from usuario import Usuario
 # from usuario import Usuario
 # from carpeta import Carpeta
 
@@ -29,7 +30,6 @@ class ServidorCorreo:
         bandeja_de_entrada = usuario.get_bandeja_entrada()#Accedemos a la bandeja de entrada de Usuario con su getter, que es un objeto de Carpeta (bandeja de entrada)
         if bandeja_de_entrada is None:
             raise ValueError('El usuario no tiene una bandeja de entrada')
-        
         mensajes = bandeja_de_entrada.get_mensajes()#Usamos el getter de Usuario para poder tener los mensajes
         if not mensajes:
             print('El usuario no tiene mensajes')
