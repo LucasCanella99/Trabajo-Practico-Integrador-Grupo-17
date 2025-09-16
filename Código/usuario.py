@@ -7,7 +7,7 @@ class Usuario:
         self.__contraseña = contraseña
         self.__correo = correo
         self.__bandeja_entrada = Carpeta('Bandeja de entrada')
-        self.__baneja_salida = Carpeta('Bandeja de salida')
+        self.__bandeja_salida = Carpeta('Bandeja de salida')
         
     @property
     def nombre(self):
@@ -50,10 +50,10 @@ class Usuario:
        self.__bandeja_entrada.agregar_mensaje(mensaje)
     
     def guardar_mensaje_enviado(self,mensaje): #Guardamos un mensaje en la bandeja de salida,usando el metodo de la clase Carpeta
-        self.__baneja_salida.agregar_mensaje(mensaje)
+        self.__bandeja_salida.agregar_mensaje(mensaje)
     
     def get_bandeja_entrada(self):
        return self.__bandeja_entrada #Getter de la bandeja de entrada
     
     def get_bandeja_salida(self):
-       return self.__baneja_salida #Getter de la bandeja de salida
+       return self.__bandeja_salida #Getter de la bandeja de salida

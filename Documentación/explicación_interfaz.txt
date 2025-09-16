@@ -1,0 +1,3 @@
+En la interfaz decidimos no poner el metodo o "la opción" de recibir mensajes ya que el servidor al enviar un mensaje al mismo tiempo
+guarda el mensaje en la bandeja de salida del remitente(sería enviar mensaje) y tambien lo guarda en la bandeja de entrada del destinatario
+que ahí seria (recibir mensaje). Y listar mensajes seria la opción de mostrar los mensajes de la bandeja de entrada o salida.
