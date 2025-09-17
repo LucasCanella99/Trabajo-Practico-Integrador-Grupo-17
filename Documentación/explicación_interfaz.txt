@@ -3,3 +3,6 @@ guarda el mensaje en la bandeja de salida del remitente(sería enviar mensaje) y
 que ahí seria (recibir mensaje). Y listar mensajes seria la opción de mostrar los mensajes de la bandeja de entrada o salida.
 Agregamos los metodos de nuevo pero con inputs para que el usuario pueda interactuar con el menu, sin eso no andaba, por eso lo agregamos.(Pasamos
 el codigo a Gemini y nos explico porque no funcionaba, porque no entendiamos porque no andaba si importabamos el ServidorCorreo) 
+Porque estaba todo importado de ServidorCorreo pero no se "conectaba" al poner self.registrar_usuario por ejemplo, python buscaba dentro de inter-
+faz y no encontraba nada y ponia error. Lo que habia que hacer era poner el metodo y utilizar los metodos importados de ServidorCorreo con los para-
+metros que ingreso el usuario mediante inputs.
