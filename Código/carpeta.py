@@ -23,7 +23,7 @@ class Carpeta:
     def eliminar_mensaje(self, mensaje_id):
         self.__mensajes = [m for m in self.__mensajes if m.id != mensaje_id] #Eliminar un mensaje por su ID
 
-    def listar_mensajes(self):
+    def lista_de_mensajes(self):
         return self.__mensajes.copy() #Devuelve la lista de __mensajes
                                       # Le puse .copy() para que devuelva una copia de la lista de mensajes y no se modifique por accidente los mensjaes dentro de la carpeta
 

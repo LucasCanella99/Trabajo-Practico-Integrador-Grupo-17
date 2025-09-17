@@ -1,0 +1,3 @@
+En el servidor decidimos aparte de el metodo de registrar usuario hacer tambien los metodos que se pedian en la interfaz(enviar mensaje, recibir
+mensaje y listar mensajes). Para que sea el que gestione todo y luego interfazz hacerlo en otro modulo aparte haciendo que importe la clase Ser-
+vidorCorreo y que solamente llame a los metodos que contiene. Creemos que es lo correcto para hacer una interfaz.

@@ -24,4 +24,4 @@ class Interfaz:
             elif opcion_elegida == 2:
                 self.enviar_mensaje()
             elif opcion_elegida == 3:
-                self.
+                pass
