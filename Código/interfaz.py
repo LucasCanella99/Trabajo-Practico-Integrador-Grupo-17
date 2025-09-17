@@ -24,4 +24,8 @@ class Interfaz:
             elif opcion_elegida == 2:
                 self.enviar_mensaje()
             elif opcion_elegida == 3:
-                pass
+                self.listar_mensajes_entrada()
+            elif opcion_elegida == 4:
+                self.listar_mensajes_salida()
+            elif opcion_elegida == 5:
+                break
