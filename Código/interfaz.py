@@ -62,7 +62,6 @@ class Interfaz:
         print('''Bandeja de entrada: \n
               ----------------------------''')
         try:
-            tipo_de_bandeja = 'entrada'
             correo = str(input('Ingrese su correo: '))
             self.__servidor.listar_mensajes_entrada(correo)
         except ValueError as e:
@@ -72,7 +71,6 @@ class Interfaz:
         print('''Bandeja de salida: \n
               ----------------------------''')
         try:
-            tipo_de_bandeja = 'salida'
             correo = str(input('Ingrese su correo: '))
             self.__servidor.listar_mensajes_salida(correo)
         except ValueError as e:
