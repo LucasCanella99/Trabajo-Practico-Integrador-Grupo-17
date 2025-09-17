@@ -28,45 +28,39 @@ class ServidorCorreo:
         remitente.guardar_mensaje_enviado(mensaje_a_enviar)#Guardamos en la bandeja de salida
         destinatario.guardar_mensaje_recibido(mensaje_a_enviar)#Lo guardamos en la bandeja de entrada del destinatario
 
-    def listar_mensajes_entrada(self,correo,tipo_bandeja):
+    def listar_mensajes_entrada(self,correo):
         if correo not in self.__usuarios:
             raise ValueError('El usuario no se encuentra registrado')
         
         usuario = self.__usuarios[correo]
 
-        if tipo_bandeja == 'entrada':
-            bandeja = usuario.get_bandeja_entrada()#Usamos los metodos de la clase Usuario para obtener los mensajes ya sean de bandeja de entrada o salida
-        else:
-            raise ValueError('El tipo de bandeja a solicitar debe ser o "entrada" ó "salida".Intente de nuevo')
-        
+        bandeja = usuario.get_bandeja_entrada()#Usamos los metodos de la clase Usuario para obtener los mensajes 
         mensajes = bandeja.lista_de_mensajes()
 
         if mensajes: 
-            print (f'Bandeja de {tipo_bandeja} del usuario {correo}: \n') # Si mensajes es True(tenia mensajes), que tiene contenido se ejecuta esta linea
+            print (f'Bandeja de entrada del usuario {correo}: \n') # Si mensajes es True(tenia mensajes), que tiene contenido se ejecuta esta linea
             for mensaje in mensajes:
                 print (f'-{mensaje}')
         else:
-            print(f'La bandeja de {tipo_bandeja} esta vacía.')# Si mensajes es False(No tenia mensajes) se ejecuta esta linea     
+            print(f'La bandeja de entrada esta vacía.')# Si mensajes es False(No tenia mensajes) se ejecuta esta linea     
     
-    def listar_mensajes_salida(self,correo,tipo_bandeja):
+    def listar_mensajes_salida(self,correo):
         if correo not in self.__usuarios:
             raise ValueError('El usuario no se encuentra registrado')
         
         usuario = self.__usuarios[correo]
 
-        if tipo_bandeja == 'salida':
-            bandeja = usuario.get_bandeja_salida()
-        else:
-            raise ValueError('El tipo de bandeja a solicitar debe ser o "entrada" ó "salida".Intente de nuevo')
+        bandeja = usuario.get_bandeja_salida()
+  
         
         mensajes = bandeja.lista_de_mensajes()
 
         if mensajes: 
-            print (f'Bandeja de {tipo_bandeja} del usuario {correo}: \n') # Si mensajes es True(tenia mensajes), que tiene contenido se ejecuta esta linea
+            print (f'Bandeja de salida del usuario {correo}: \n') # Si mensajes es True(tenia mensajes), que tiene contenido se ejecuta esta linea
             for mensaje in mensajes:
                 print (f'-{mensaje}')
         else:
-            print(f'La bandeja de {tipo_bandeja} esta vacía.')# Si mensajes es False(No tenia mensajes) se ejecuta esta linea  
+            print(f'La bandeja de salida esta vacía.')# Si mensajes es False(No tenia mensajes) se ejecuta esta linea  
 
         
         
