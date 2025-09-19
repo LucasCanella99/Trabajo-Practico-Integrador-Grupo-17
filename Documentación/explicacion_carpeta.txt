@@ -1,0 +1,8 @@
+Esta clase Carpeta representa un deposito de mensajes, que va a permitir organizar
+mensajes de una forma ordenada, asegurando metodos para agregar, eliminar, realizar
+listas y tambien buscar mensajes de una manera ordenada, sin alterar una modificacion
+directa de los datos internos. 
+Usamos atributos privados para encapsular el estado interno y para asi evitar
+modificaciones accidentales, validamos las entradas para que asi impedir datos 
+incorrectos, tambien funciones que permiten busquedas avanzadas y prevenir errores, 
+para proteger la lista original.
