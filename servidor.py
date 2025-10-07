@@ -1,8 +1,27 @@
+from abc import ABC, abstractmethod
 from mensaje import Mensaje
 from usuario import Usuario
 
+class InterfazBasica(ABC):#No implementamos recibir mensaje porque ya el m
+    @abstractmethod
+    def enviar_mensaje(self,mensaje,destinatario,remitente,asunto): 
+        pass
+    @abstractmethod
+    def listar_mensajes(self,correo,bandeja):
+        pass
+    @abstractmethod
+    def registrar_usuario(self,nombre,apellido, contraseña,correo):
+        pass
+    @abstractmethod
+    def get_usuarios(self):
+        pass
+    @abstractmethod
+    def recibir_mensaje(self,correo):
+        pass
 
-class ServidorCorreo:
+    
+
+class ServidorCorreo(InterfazBasica):
     def __init__(self):
         self.__usuarios = {} #Acá vamos a guardar los usuarios, con su correo
 
@@ -28,39 +47,51 @@ class ServidorCorreo:
         remitente.guardar_mensaje_enviado(mensaje_a_enviar)#Guardamos en la bandeja de salida
         destinatario.guardar_mensaje_recibido(mensaje_a_enviar)#Lo guardamos en la bandeja de entrada del destinatario
 
-    def listar_mensajes_entrada(self,correo):
-        if correo not in self.__usuarios:
-            raise ValueError('El usuario no se encuentra registrado')
-        
-        usuario = self.__usuarios[correo]
-
-        bandeja = usuario.get_bandeja_entrada()#Usamos los metodos de la clase Usuario para obtener los mensajes 
-        mensajes = bandeja.lista_de_mensajes()
-
-        if mensajes: 
-            print (f'Bandeja de entrada del usuario {correo}: \n') # Si mensajes es True(tenia mensajes), que tiene contenido se ejecuta esta linea
-            for mensaje in mensajes:
-                print (f'-{mensaje}')
-        else:
-            print(f'La bandeja de entrada esta vacía.')# Si mensajes es False(No tenia mensajes) se ejecuta esta linea     
-    
-    def listar_mensajes_salida(self,correo):
-        if correo not in self.__usuarios:
-            raise ValueError('El usuario no se encuentra registrado')
-        
-        usuario = self.__usuarios[correo]
-
-        bandeja = usuario.get_bandeja_salida()
   
-        
-        mensajes = bandeja.lista_de_mensajes()
 
-        if mensajes: 
-            print (f'Bandeja de salida del usuario {correo}: \n') # Si mensajes es True(tenia mensajes), que tiene contenido se ejecuta esta linea
-            for mensaje in mensajes:
-                print (f'-{mensaje}')
+    def listar_mensajes(self,correo,tipo_de_bandeja): #En este metodo agregamos como parametro tipo_de_bandeja para que devuelva la de entrada o salida
+        if correo not in self.__usuarios:
+            raise ValueError('El usuario: ' + correo + ' no se encuentra registrado')
+        
+        usuario = self.__usuarios[correo]
+
+        if tipo_de_bandeja == 'entrada':
+            bandeja = usuario.get_bandeja_entrada()
+            mensajes = bandeja.lista_de_mensajes()
+            if mensajes: 
+                print ('Bandeja de entrada del usuario: '+ correo + '\n') 
+                for mensaje in mensajes:
+                    print ('-'+ str(mensaje))
+            else:
+                print('La bandeja de entrada esta vacía.')
+        
+        elif tipo_de_bandeja == 'salida':
+            bandeja = usuario.get_bandeja_salida()
+            mensajes = bandeja.lista_de_mensajes()
+            if mensajes: 
+                print ('Bandeja de salida del usuario: '+ correo + '\n') 
+                for mensaje in mensajes:
+                    print ('-'+ str(mensaje) )
+            else:
+                print('La bandeja de salida esta vacía.')
         else:
-            print(f'La bandeja de salida esta vacía.')# Si mensajes es False(No tenia mensajes) se ejecuta esta linea  
+            raise ValueError('El tipo de bandeja debe ser "entrada" ó "salida"')
+
+
+    def recibir_mensaje(self,correo): # hicimos que este metodo de la cantidad de mensajes, porque enviar mensajes ya hace que el destinatario, reciba el mensaje y que listar mensaje, los muestre.
+        if correo not in self.__usuarios:
+            raise ValueError('El usuario: ' + correo + ' .No se encuentra registrado')
+        
+        usuario = self.__usuarios[correo]
+        bandeja = usuario.get_bandeja_entrada()
+        mensajes = bandeja.lista_de_mensajes()
+        cantidad_mensajes = len(mensajes)
+
+        return 'El usuario ' + str(correo) + ' tiene: ' + str(cantidad_mensajes) + ' mensajes.'
+
+
+
+        
 
         
         
