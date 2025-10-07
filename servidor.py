@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from mensaje import Mensaje
 from usuario import Usuario
 
-class InterfazBasica(ABC):#No implementamos recibir mensaje porque ya el m
+class InterfazBasica(ABC):
     @abstractmethod
     def enviar_mensaje(self,mensaje,destinatario,remitente,asunto): 
         pass
@@ -11,9 +11,6 @@ class InterfazBasica(ABC):#No implementamos recibir mensaje porque ya el m
         pass
     @abstractmethod
     def registrar_usuario(self,nombre,apellido, contraseña,correo):
-        pass
-    @abstractmethod
-    def get_usuarios(self):
         pass
     @abstractmethod
     def recibir_mensaje(self,correo):
@@ -78,7 +75,7 @@ class ServidorCorreo(InterfazBasica):
             raise ValueError('El tipo de bandeja debe ser "entrada" ó "salida"')
 
 
-    def recibir_mensaje(self,correo): # hicimos que este metodo de la cantidad de mensajes, porque enviar mensajes ya hace que el destinatario, reciba el mensaje y que listar mensaje, los muestre.
+    def recibir_mensaje(self,correo): # hicimos que este metodo de la cantidad de mensajes recibidos, porque enviar mensajes ya hace que el destinatario, reciba el mensaje y que listar mensaje, los muestre.
         if correo not in self.__usuarios:
             raise ValueError('El usuario: ' + correo + ' .No se encuentra registrado')
         
