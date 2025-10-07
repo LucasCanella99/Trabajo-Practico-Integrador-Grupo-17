@@ -1,4 +1,4 @@
-from servidor_correo import ServidorCorreo
+from servidor import ServidorCorreo
 
 class Interfaz:
     def __init__(self):
