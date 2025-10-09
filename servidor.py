@@ -54,7 +54,7 @@ class ServidorCorreo(InterfazBasica):
 
         if tipo_de_bandeja == 'entrada':
             bandeja = usuario.get_bandeja_entrada()
-            mensajes = bandeja.lista_de_mensajes()
+            mensajes = bandeja.mensajes
             if mensajes: 
                 print ('Bandeja de entrada del usuario: '+ correo + '\n') 
                 for mensaje in mensajes:
@@ -64,7 +64,7 @@ class ServidorCorreo(InterfazBasica):
         
         elif tipo_de_bandeja == 'salida':
             bandeja = usuario.get_bandeja_salida()
-            mensajes = bandeja.lista_de_mensajes()
+            mensajes = bandeja.mensajes
             if mensajes: 
                 print ('Bandeja de salida del usuario: '+ correo + '\n') 
                 for mensaje in mensajes:
@@ -81,8 +81,7 @@ class ServidorCorreo(InterfazBasica):
         
         usuario = self.__usuarios[correo]
         bandeja = usuario.get_bandeja_entrada()
-        mensajes = bandeja.lista_de_mensajes()
-        cantidad_mensajes = len(mensajes)
+        cantidad_mensajes = len(bandeja.mensajes)
 
         return 'El usuario ' + str(correo) + ' tiene: ' + str(cantidad_mensajes) + ' mensajes.'
 

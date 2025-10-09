@@ -6,8 +6,11 @@ class Usuario:
         self.__apellido = apellido
         self.__contraseña = contraseña
         self.__correo = correo
-        self.__bandeja_entrada = Carpeta('Bandeja de entrada')
-        self.__bandeja_salida = Carpeta('Bandeja de salida')
+        #Atributos para arbol de carpetas
+        self.raiz = Carpeta('Carpeta principal')
+        #Subcarpetas predeterminadas
+        self.raiz.agregar_subcarpeta('Bandeja de entrada')# Se crea en cada usuario una subcarpeta de la raiz, para mensajes de entrada
+        self.raiz.agregar_subcarpeta('Bandeja de salida')# subcarpeta predeterminada para mensajes de salida
         
     @property
     def nombre(self):
@@ -46,14 +49,19 @@ class Usuario:
           raise ValueError("Su correo no puede estar vacio")
        self.__correo = valor   
 
-    def guardar_mensaje_recibido(self,mensaje): #Guardamos un mensaje en la bandeja de entrada,usando el metodo de la clase Carpeta
-       self.__bandeja_entrada.agregar_mensaje(mensaje)
+    def guardar_mensaje_recibido(self,mensaje): 
+       bandeja_entrada = self.raiz.obtener_subcarpeta('Bandeja de entrada')
+       if bandeja_entrada: #Una verificación extra que existe
+          bandeja_entrada.agregar_mensaje(mensaje)#El metodo agregar_mensaje ya verifica si mensaje es una instancia de Mensaje
     
-    def guardar_mensaje_enviado(self,mensaje): #Guardamos un mensaje en la bandeja de salida,usando el metodo de la clase Carpeta
-        self.__bandeja_salida.agregar_mensaje(mensaje)
+    def guardar_mensaje_enviado(self,mensaje): 
+        bandeja_entrada = self.raiz.obtener_subcarpeta('Bandeja de salida')
+        if bandeja_entrada:
+            bandeja_entrada.agregar_mensaje(mensaje)
     
     def get_bandeja_entrada(self):
-       return self.__bandeja_entrada #Getter de la bandeja de entrada
+       return self.raiz.obtener_subcarpeta('Bandeja de entrada')
     
     def get_bandeja_salida(self):
-       return self.__bandeja_salida #Getter de la bandeja de salida
+       return self.raiz.obtener_subcarpeta('Bandeja de salida')
+    #La razon de que estos metodos son simples es que estas carpetas por defecto ya estan en el dict de la raiz, lo que ahorra tiempo y es mucho mas eficiente
