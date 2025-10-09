@@ -58,7 +58,7 @@ class Carpeta:
         for subcarpeta in self.subcarpetas.values():#Busca en las subcarpetas recursivamente
             carpeta_actual = subcarpeta.obtener_carpeta(mensaje)
             if carpeta_actual is not None:
-                return carpeta_actual #Si lo encontro retorna el mensaje
+                return carpeta_actual #Si lo encontro retorna la carpeta de origen 
         return None#No lo encontro en ninguna subcarpeta    
     
     #Damos por entendido que el usuario introduce el mensaje que quiere mover,ahi si aplicamos recursión para encontrar la subcarpeta.Origen

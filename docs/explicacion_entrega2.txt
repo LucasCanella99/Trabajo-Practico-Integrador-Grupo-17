@@ -1,0 +1,27 @@
+La nueva clase carpeta implementada como un arbol general si inicializa por defecto "como nodo y arbol" a la vez. Para garantizza una mayor efi-
+iencia en los metodos de busqueda e inserción. Tiene un diccionario para almacenar a sus "hijos" que van a ser subcarpetas de la raiz, que se 
+inicializa como "carpeta principal" al momento de crear un usuario, asi como dos subcarpetas('Bandeja de entrada y salida') tambien cada nodo
+o subcarpeta en este caso tiene una lista donde almacenar todos sus mensajes y obviamente un atributo con su nombre para  identificarla.
+El metodo buscar_mensajes lo hace de forma recursiva con un algoritmo de busqueda en profundidad que primero comienza buscando en la raiz y luego
+va llamando y "analizando" recursivamente a sus subcarpetas en sus mensajes correspondientes que coincidan con el criterio de busqueda, como se re-
+quirio por asunto o remitente. Una vez que los encuentra mediante el metodo .extend() en cada llamada recursiva lo agrega a una lista de resultados.
+A la que se retorna finalmente una vez que ya no hay mas recursion (o mensajes que coincidancon el criterio de busqueda).
+Luego para hacer el metodo mover_mensaje optamos por hacer 3 metodos auxiliares antes para que sea mas "limpio" el mover mensajes. Los metodos auxi-
+liares son: agregar_mensaje, eliminar_mensaje. Que verifican que el mensaje a remover o eliminar sea una instancia de Mensaje y mediante .append()
+y remove(). Agregan y eliminan el mensaje deseado. y el tercer metodo auxiliar obtener_carpeta es para devolver la carpeta de origen donde esta el mensaje
+a mover para luego poder aplicar el metodo eliminar_mensaje() para reubicarlo en destino deseado. Osea moverlo. Para encontrar la subcarpeta aplicamos
+la recursion similar al metodo buscar_mensajes.
+Para el metodo mover_mensaje dimos por entendido que era necesario buscar recursivamente la carpetade origen pero tambien dimos por entendido que el usuario
+de antemano iba a proporconar la carpeta de destino. Sino es imposible saber donde quiere mover el mensaje. Por lo tanto la pasamos como parametro junto
+al mensajea mover en los parametros del metodo mover_mensaje(). En el metodo mover_mensaje() primero verificamos que todos los datos sean instancias. Des-
+pues obtenemos la carpeta de origen con obtener_carpeta(), luego eliminamos el mensaje de la lista de mensajes de carpeta de origen y agregamos el mensaje al
+destino con agregar_mensaje() en el destino proporcionado por el usuario.
+ 
+El analisis de complejidad en buscar_mensajes seria O(n) porque al ser una busqueda recursiva en un arbol con carpeta y subcarpetas la eficiencia de la operacion
+depende directamente a la cantidad de subcarpetas que existan
+
+El analisis de complejidad en mover_mensajes seria O(n) porque depende de la cantidad de subcarpetas a recorrer para encontrar la carpeta de origen del mensaje
+a mover.
+
+El analisi de complejidad de los hijos de la raiz que en este caso serian bandeja de entrada y salida. Seria O(1) ya que la busqueda se hace directamente en el diccionario
+de la raiz. Ya que son "hijos directos" de la carpeta principal
