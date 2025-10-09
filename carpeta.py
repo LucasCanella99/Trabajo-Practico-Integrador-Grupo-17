@@ -74,7 +74,7 @@ class Carpeta:
             return
         carpeta_origen.eliminar_mensaje(mensaje) #Eliminamos el mensaje de la carpeta de origen
         destino.agregar_mensaje(mensaje)#Lo agregamos en la carpeta de destino proporcionada por el usuario
-        print ('El mensaje se ha movido de la carpeta ' + str(carpeta_origen) + ' a la carpeta ' + str(destino) + ' con exito!')
+        print ('El mensaje se ha movido de la carpeta ' + str(carpeta_origen.nombre) + ' a la carpeta ' + str(destino.nombre) + ' con exito!')
         return True
 
         
