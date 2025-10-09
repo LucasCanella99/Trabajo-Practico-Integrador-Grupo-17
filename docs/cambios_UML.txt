@@ -1,0 +1,1 @@
+Cambio de UML entrega 1 a entrega 2. Se realizaron los cambios correspondientes en Usuario y Carpeta. Y ahora Carpeta se "autoreferencia" al ser una estructura recursiva que tiene un nodo padre Carpeta y de 0 a infinitos hijos que son las subcarpetas.
