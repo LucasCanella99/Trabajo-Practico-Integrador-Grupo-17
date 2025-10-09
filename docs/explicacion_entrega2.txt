@@ -16,6 +16,7 @@ de antemano iba a proporconar la carpeta de destino. Sino es imposible saber don
 al mensajea mover en los parametros del metodo mover_mensaje(). En el metodo mover_mensaje() primero verificamos que todos los datos sean instancias. Des-
 pues obtenemos la carpeta de origen con obtener_carpeta(), luego eliminamos el mensaje de la lista de mensajes de carpeta de origen y agregamos el mensaje al
 destino con agregar_mensaje() en el destino proporcionado por el usuario.
+Tambien se modificaron pequeñas cosas en servidor y clase usuario para que funcione correctamente con el arbol general de carpeta
  
 El analisis de complejidad en buscar_mensajes seria O(n) porque al ser una busqueda recursiva en un arbol con carpeta y subcarpetas la eficiencia de la operacion
 depende directamente a la cantidad de subcarpetas que existan
