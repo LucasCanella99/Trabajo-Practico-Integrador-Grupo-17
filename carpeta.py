@@ -8,8 +8,7 @@ class Carpeta:
 
     def agregar_subcarpeta(self,nombre):
         if nombre in self.subcarpetas:
-            print ('La carpeta ' + str(nombre) +' ya existe!')
-            return None
+            raise ValueError('La carpeta ' + str(nombre) +' ya existe!')
 
         nueva_subcarpeta = Carpeta(nombre)
         self.subcarpetas[nombre] = nueva_subcarpeta
@@ -77,9 +76,17 @@ class Carpeta:
         print ('El mensaje se ha movido de la carpeta ' + str(carpeta_origen.nombre) + ' a la carpeta ' + str(destino.nombre) + ' con exito!')
         return True
 
+    def obtener_carpeta_padre(self,carpeta_padre): #creamos este metodo para obtener la carpeta padre
+        if carpeta_padre in self.subcarpetas:
+            return self.subcarpetas[carpeta_padre]     #Complejidad 0(1) ya que es busqueda en diccionario
         
-        
+        for subcarpeta in self.subcarpetas.values(): #Busqueda recursiva en subcarpetas, complejidad 0(n) ya que depende de la cant. de subcarpetas.
+            resultado =  subcarpeta.obtener_carpeta_padre(carpeta_padre)
 
+            if resultado is not None:
+                return resultado #se encontró y se devuelve la ubicación
+        
+        return None #no se encontró nada
 
         
             

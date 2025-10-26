@@ -65,3 +65,21 @@ class Usuario:
     def get_bandeja_salida(self):
        return self.raiz.obtener_subcarpeta('Bandeja de salida')
     #La razon de que estos metodos son simples es que estas carpetas por defecto ya estan en el dict de la raiz, lo que ahorra tiempo y es mucho mas eficiente
+
+    def crear_subcarpeta_anidada(self,nombre_nueva_carpeta,nombre_carpeta_padre): #metodo para crear subcarpeta anidada en subcarpetas.
+        if nombre_carpeta_padre == self.raiz.nombre:
+            carpeta_padre = self.raiz #esta en el primer nivel
+        else:
+           carpeta_padre = self.raiz.obtener_carpeta_padre(nombre_carpeta_padre) #no la encontramos la buscamos recusivamente
+        
+        if carpeta_padre is None:
+           raise ValueError('La carpeta padre introducida no existe') 
+        
+        try: #Se intenta la creación de la subcarpeta 
+           carpeta_padre.agregar_subcarpeta(nombre_nueva_carpeta)
+           print('Se ha creado la carpeta: ' + str(nombre_nueva_carpeta) + ' exitosamente')
+           return True
+        
+        except ValueError as e:
+           print('Error al crear la subcarpeta: ' + e)
+           return False
