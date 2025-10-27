@@ -1,0 +1,11 @@
+Para el manejo de casos limite del modulo carpeta implementamos los siguiente:
+Para el caso de querer agregar una subcarpeta en la raiz y que ya exista. Levantamos un ValueError. Tambien para el caso de agregar una subcarpeta anidada
+tambien sirve porque se llama al metodo agregar_subcarpeta() y si en el try-except se levanta un error de que ya existe sale lo mismo.(este metodo se llama en usuario igual).
+
+Para el caso de eliminar un mensaje si el objeto a eliminar no es del tipo mensaje se levanta un Typerror y si lo es pero no se encuentra el mensaje se lanza un ValueError en el except
+del try-except.
+
+Para el caso de mover un mensaje si el destino no es un objeto de tipo Carpeta se levanta un Typerror y si no se encuentra el mensajea mover se levanta un ValueError.
+
+
+

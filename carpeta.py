@@ -43,8 +43,8 @@ class Carpeta:
         
     def eliminar_mensaje(self,mensaje):
         if not isinstance(mensaje,Mensaje):
-            print('Solo se pueden eliminar mensajes de tipo Mensaje')
-            return
+            raise TypeError('Solo se pueden eliminar mensajes de tipo Mensaje')
+            
         try:
             self.mensajes.remove(mensaje)
         except ValueError:
@@ -65,12 +65,11 @@ class Carpeta:
 
     def mover_mensaje(self,mensaje,destino):
         if not isinstance(destino,Carpeta):
-            print('La carpeta de destino debe ser un objeto tipo Carpeta')
-            return
+            raise TypeError('La carpeta de destino debe ser un objeto tipo Carpeta')
+            
         carpeta_origen = self.obtener_carpeta(mensaje)
         if carpeta_origen is None:
-            print('No se encontró el mensaje a mover')
-            return
+            raise ValueError('No se encontró el mensaje a mover')
         carpeta_origen.eliminar_mensaje(mensaje) #Eliminamos el mensaje de la carpeta de origen
         destino.agregar_mensaje(mensaje)#Lo agregamos en la carpeta de destino proporcionada por el usuario
         print ('El mensaje se ha movido de la carpeta ' + str(carpeta_origen.nombre) + ' a la carpeta ' + str(destino.nombre) + ' con exito!')
