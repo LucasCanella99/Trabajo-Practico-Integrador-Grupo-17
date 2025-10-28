@@ -1,4 +1,5 @@
 from mensaje import Mensaje
+import heapq
 
 class Carpeta:
     def __init__(self,nombre):
@@ -36,10 +37,19 @@ class Carpeta:
 
     def agregar_mensaje(self,mensaje):
         if isinstance(mensaje,Mensaje):
-            self.mensajes.append(mensaje)
+            nodo = (-mensaje.prioridad,mensaje)
+            heapq.heappush(self.mensajes,nodo) #Inserción correcta en heap, si es urgente va arriba si no más abajo(prioridad = -1 y prioridad = 0)
         else:
-            print('Solo se pueden agregar mensajes de tipo Mensaje')
-            return
+            raise TypeError('Solo se pueden agregar mensajes de tipo Mensaje')
+        
+    def lista_mensajes(self):
+        temp_heap = self.mensajes[:] #Copia temporal de la lista de mensajes, evitamos que sea modificada la lista original
+        lista_temporal = []
+        while temp_heap: #Iteración sobre la copia de la lista
+            mensaje = heapq.heappop(temp_heap) #El algoritmo quita el que tenga mas prioridad y reorganiza
+            lista_temporal.append(mensaje[1]) #Lo agregamos a la lista temporal(solo el objeto clase Mensaje), el mas prioritario actualmente en la iteracion
+        return lista_temporal # Devolvemos la lista
+            
         
     def eliminar_mensaje(self,mensaje):
         if not isinstance(mensaje,Mensaje):

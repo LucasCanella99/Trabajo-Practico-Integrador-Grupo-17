@@ -1,9 +1,10 @@
 class Mensaje:
-    def __init__(self,mensaje,destinatario,remitente,asunto):
+    def __init__(self,mensaje,destinatario,remitente,asunto,prioridad=0):
         self.__mensaje = mensaje
         self.__destinatario = destinatario
         self.__remitente = remitente
         self.__asunto = asunto
+        self.prioridad = prioridad #1 = Urgente 0= normal
 
     def set_mensaje(self,nuevo_mensaje): #cambiar el nombre de la variable, es el mensaje que se va a escribir
         self.__mensaje = str(nuevo_mensaje)
