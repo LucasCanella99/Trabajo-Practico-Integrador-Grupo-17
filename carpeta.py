@@ -17,8 +17,13 @@ class Carpeta:
         return nueva_subcarpeta
     
     def obtener_subcarpeta(self,nombre):
-        subcarpeta_a_obtener = self.subcarpetas.get(nombre)
-        return subcarpeta_a_obtener
+        if nombre in self.subcarpetas:
+            return self.subcarpetas[nombre] #Se encontraba en el primer nivel
+        for subcarpeta in self.subcarpetas.values():
+            resultado = subcarpeta.obtener_subcarpeta(nombre)# Busqueda recursiva
+            if resultado is not None:
+                return resultado #si se encontro se devuelve el nombre de la subcarpeta 
+        return None
     
     def buscar_mensajes(self,criterio_de_busqueda): #Hace una busqueda recursiva, primero en la raiz, y luego recursivamente en las subcarpetas
                                                     # y agrega todos los mensajes coincidentes en resultados y finalmente lo retorna

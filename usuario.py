@@ -1,7 +1,7 @@
 from carpeta import Carpeta
 
 class Usuario:
-    def __init__(self, nombre,apellido, contraseña,correo):
+   def __init__(self, nombre,apellido, contraseña,correo):
         self.__nombre = nombre
         self.__apellido = apellido
         self.__contraseña = contraseña
@@ -11,62 +11,64 @@ class Usuario:
         #Subcarpetas predeterminadas
         self.raiz.agregar_subcarpeta('Bandeja de entrada')# Se crea en cada usuario una subcarpeta de la raiz, para mensajes de entrada
         self.raiz.agregar_subcarpeta('Bandeja de salida')# subcarpeta predeterminada para mensajes de salida
+        #Filtro
+        self.reglas_filtrado = []
         
-    @property
-    def nombre(self):
+   @property
+   def nombre(self):
         return self.__nombre
-    @nombre.setter
-    def nombre(self,valor ):
+   @nombre.setter
+   def nombre(self,valor ):
         if valor.strip() == "":
          raise ValueError("El nombre del usuario no puede estar vacio")
         self.__nombre = valor
-    @property
-    def apellido(self):
+   @property
+   def apellido(self):
         return self.__apellido
-    @apellido.setter
-    def apellido(self,valor ):
+   @apellido.setter
+   def apellido(self,valor ):
         if  valor.strip() == "":
          raise ValueError("El apellido del usuario no puede estar vacio")
         self.__apellido = valor
-    @property
-    def contraseña(self):
+   @property
+   def contraseña(self):
         return self.__contraseña
-    @contraseña.setter
-    def contraseña(self,valor ):
+   @contraseña.setter
+   def contraseña(self,valor ):
        if len(valor) < 10:
          raise ValueError("Su contraseña debe tener al menos 10 caracteres")
        if valor.strip() == "":
           raise ValueError("La contraseña no puede estar vacia")
        self.__contraseña = valor
-    @property
-    def correo(self):
+   @property
+   def correo(self):
         return self.__correo
-    @correo.setter
-    def correo(self,valor ):
+   @correo.setter
+   def correo(self,valor ):
        if not "@" in valor or not "." in valor:
          raise ValueError("ingrese un correo valido ")
        if valor.strip() == "":
           raise ValueError("Su correo no puede estar vacio")
        self.__correo = valor   
 
-    def guardar_mensaje_recibido(self,mensaje): 
+   def guardar_mensaje_recibido(self,mensaje): 
        bandeja_entrada = self.raiz.obtener_subcarpeta('Bandeja de entrada')
        if bandeja_entrada: #Una verificación extra que existe
           bandeja_entrada.agregar_mensaje(mensaje)#El metodo agregar_mensaje ya verifica si mensaje es una instancia de Mensaje
     
-    def guardar_mensaje_enviado(self,mensaje): 
+   def guardar_mensaje_enviado(self,mensaje): 
         bandeja_entrada = self.raiz.obtener_subcarpeta('Bandeja de salida')
         if bandeja_entrada:
             bandeja_entrada.agregar_mensaje(mensaje)
     
-    def get_bandeja_entrada(self):
+   def get_bandeja_entrada(self):
        return self.raiz.obtener_subcarpeta('Bandeja de entrada')
     
-    def get_bandeja_salida(self):
+   def get_bandeja_salida(self):
        return self.raiz.obtener_subcarpeta('Bandeja de salida')
     #La razon de que estos metodos son simples es que estas carpetas por defecto ya estan en el dict de la raiz, lo que ahorra tiempo y es mucho mas eficiente
 
-    def crear_subcarpeta_anidada(self,nombre_nueva_carpeta,nombre_carpeta_padre): #metodo para crear subcarpeta anidada en subcarpetas.
+   def crear_subcarpeta_anidada(self,nombre_nueva_carpeta,nombre_carpeta_padre): #metodo para crear subcarpeta anidada en subcarpetas.
         if nombre_carpeta_padre == self.raiz.nombre:
             carpeta_padre = self.raiz #esta en el primer nivel
         else:
@@ -83,3 +85,28 @@ class Usuario:
         except ValueError as e:
            print('Error al crear la subcarpeta: ' + e)
            return False
+
+   def creacion_regla_de_filtro(self,palabra_clave = str, carpeta_destino= str):
+      regla = (palabra_clave.lower(),carpeta_destino.lower()) #.lower() para evitar conflictos de sintaxis
+      self.reglas_filtrado.append(regla)#Agregamos la regla a la lista de reglas de filtrado
+
+   def aplicar_filtro(self, mensaje):#Metodo auxiliar
+      asunto = mensaje.asunto.lower() #"extraemos" el asunto del mensaje en minusculas para evitar errrores.
+      for palabra_clave, carpeta_destino in self.reglas_filtrado:
+          if palabra_clave in asunto:
+              return carpeta_destino
+      
+      return None
+   
+   def filtrar_mensaje(self,mensaje):
+      nombre_carpeta_destino = self.aplicar_filtro(mensaje)
+
+      if nombre_carpeta_destino: #Caso que devuelve el nombre de la carpeta de destino
+         try:
+            carpeta_destino = self.raiz.obtener_subcarpeta(nombre_carpeta_destino) # se obtiene su ubicacion
+            carpeta_destino.agregar_mensaje(mensaje)
+            return #El mensaje se agregó y salimos del metodo
+         except Exception:
+            pass # No se encontro la carpeta
+      
+      self.guardar_mensaje_recibido(mensaje) # Caso que faplicar_filtro haya retornado None

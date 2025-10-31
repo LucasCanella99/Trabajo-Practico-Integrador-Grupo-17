@@ -47,7 +47,7 @@ class ServidorCorreo(InterfazBasica):
         remitente = self.__usuarios[remitente]
         mensaje_a_enviar = Mensaje(mensaje,destinatario.correo,remitente.correo,asunto,prioridad = prioridad_de_asignacion)#Se escribe el mensaje con todo lo que requiere
         remitente.guardar_mensaje_enviado(mensaje_a_enviar)#Guardamos en la bandeja de salida
-        destinatario.guardar_mensaje_recibido(mensaje_a_enviar)#Lo guardamos en la bandeja de entrada del destinatario
+        destinatario.filtrar_mensaje(mensaje_a_enviar)#Lo guardamos en la bandeja de entrada del destinatario
 
   
 
