@@ -13,6 +13,8 @@ una carpeta de destino. Se guarda como tupla y se almacena en la lista de filtro
 Para aplicar el filtro vamos a hacer un metodo auxilar(aplicar_filtro()) que si el mensaje a filtrar coincide con una regla de filtrado, retorna el nombre
 para que otro metodo se encarge de la logica de movimiento y si no coincide devuelve none para que el otro metodo lo mueva por defecto a la bandeja de entrada.
 Para hacer esto iteramos sobre la lista de tuplas(reglas de filtrado).
+El analisis de complejidad de aplicar_filtro() es de O(n) ya que para obtener la carpeta de destino dependiendo de la palabra clave en el asunto depende de
+e la cantidad de tuplas a recorrer que haya en la lista de tuplas reglas_filtrado.
 
 Para filtrar el mensaje lo que se hace en el metodo filtrar_mensaje() es primero aplicar el metodo auxilar aplicar_filtro() para que nos devuelva o el nombre de la 
 carpeta de destino o un None. Si nos devulve el nombre de la carpeta de destino para ese mensaje(la carpeta previamente definida en regla de filtrado) se aplica la 
