@@ -34,10 +34,10 @@ class ServidorCorreo(InterfazBasica):
         return self.__usuarios.copy() #Por seguridad para que no haya modificaciones accidentales en el diccionario original
 
     def enviar_mensaje(self,mensaje,destinatario,remitente,asunto):
-        prioridad_de_asignacion = 0
+        prioridad_de_asignacion = 1
 
-        if 'urgente' in asunto.lower(): # Si el asunto dice por ej "Facturas urgente" le cambia la prioridad a 1
-            prioridad_de_asignacion = 1
+        if 'urgente' in asunto.lower(): # Si el asunto dice por ej "Facturas urgente" le cambia la prioridad a 0
+            prioridad_de_asignacion = 0
         
         if destinatario not in self.__usuarios:
             raise ValueError('El destinatario no esta registrado en el sistema')

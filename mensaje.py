@@ -4,7 +4,7 @@ class Mensaje:
         self.__destinatario = destinatario
         self.__remitente = remitente
         self.__asunto = asunto
-        self.prioridad = prioridad #1 = Urgente 0= normal
+        self.prioridad = prioridad #Urgente = 0 y normal = 1
 
     def set_mensaje(self,nuevo_mensaje): #cambiar el nombre de la variable, es el mensaje que se va a escribir
         self.__mensaje = str(nuevo_mensaje)

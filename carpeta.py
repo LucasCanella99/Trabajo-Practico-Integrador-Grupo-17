@@ -42,8 +42,8 @@ class Carpeta:
 
     def agregar_mensaje(self,mensaje):
         if isinstance(mensaje,Mensaje):
-            nodo = (-mensaje.prioridad,mensaje)
-            heapq.heappush(self.mensajes,nodo) #Inserción correcta en heap, si es urgente va arriba si no más abajo(prioridad = -1 y prioridad = 0)
+            nodo = (mensaje.prioridad,mensaje)
+            heapq.heappush(self.mensajes,nodo) #Inserción correcta en heap, si es urgente va arriba si no más abajo(prioridad = 0 y prioridad = 1)
         else:
             raise TypeError('Solo se pueden agregar mensajes de tipo Mensaje')
         
