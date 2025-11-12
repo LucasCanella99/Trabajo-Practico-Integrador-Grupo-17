@@ -1,4 +1,4 @@
-Para hacer el grafo, decidimos hacer otro modulo aparte que se llama Redservidores. Lo decidimos hacer asi porque nos parecio lo más prolijo y funcional. Y no encontramos manera
+Para hacer el grafo, decidimos hacer otro modulo aparte que se llama redservidores. Lo decidimos hacer asi porque nos parecio lo más prolijo y funcional. Y no encontramos manera
 de hacer que se integre dentro de el modulo servidor ya que este mismo lo vamos a utilizar de nodo/vertice para el grafo de la red de servidores.
 En cuanto al grafo, decidimos hacerlo un grafo dirigido porque estuvimos investigando a grandes rasgos de como funciona el envio de mensajes en realidad entre distintos dominios
 de mail y no simpre se asegura que si un dominio le envia un correo a otro dominio este mismo tenga en esa arista la capacidad de responder. Descubrimos que Los Registros MX son 
@@ -29,4 +29,11 @@ Es altamente eficiente porque mantiene la estructura del diccionario y no agrega
 
 agregar_conexion(), verifica primero que ambos dominios, origen y destino existan en la red y luego, accede a la lista de adyacencias buscando el origen y le agrega a su conexion con .add()
 el destino. Todo manteniendo la eficiencia O(1).
+
+encontrar_ruta(), Utilizamos el algoritmo de busqueda BFS que lo que hace es asegurarse de visitar cada "nivel de conexiones" de los dominios antes de pasar al siguiente. Lo que hace es primero
+crear una tupla con el dominio actual y la ruta actual visitada(el primero el mismo), tambien se almacenaen un set (para evitar repeticiones) los dominios ya visitados. Luego iterativamente lo que
+hace el algoritmo es saca ese primer nodo y en su lista de conexiones, busca el destino requerido. Si lo encuentra retorna la ruta desde el origen hasta el destino y sino. Lo que hace es seguir buscando 
+en su lista de conexiones, se agrega al set de visitados la conexion actual para evitar un bucle infinito y evitar repeticiones. Se crea una nueva ruta con la ruta actual mas la conexion actual y finalmente se crea una nueva tupla
+con esa conexion actual y la ruta actual hasta el momento y se la guarda como una tupla en la cola. Se realiza este proceso iterativamente hasta encontrar la ruta que coincida con el destino y de esta manera se
+asegura que la ruta que se retorne sea la que tenga menos vertices/nodos(en este caso dominios(servidor)) intermedios. Esto se logra al explorar nivel por nivel completo antes de pasar al siguiente.
 
