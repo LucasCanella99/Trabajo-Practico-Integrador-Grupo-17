@@ -1,0 +1,1 @@
+Para poder hacer el grafo tuvimos que modificar la clase servidor (nodo de la red) ahora cada servidor va a tener dominio propio y en el cada usuario registrado obviamente va a pertenecer a ese dominio.

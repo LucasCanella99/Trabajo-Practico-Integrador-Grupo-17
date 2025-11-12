@@ -19,17 +19,30 @@ class InterfazBasica(ABC):
     
 
 class ServidorCorreo(InterfazBasica):
-    def __init__(self):
+    def __init__(self,dominio):
         self.__usuarios = {} #Acá vamos a guardar los usuarios, con su correo
+        self.__dominio = dominio #Dominio del servidor, cada nodo del grafo va a tener un dominio en especifico
 
     def registrar_usuario(self,nombre,apellido, contraseña,correo):
         if correo in self.__usuarios:
             raise ValueError('La dirección de correo ya existe')
         
+        correo_partes = correo.split('@') #Separamos el correo en dos partes. Nombre y dominio
+        if len(correo_partes) != 2: # Verificamos que el correo este correctamente tipeado
+            raise ValueError('El formato de correo es invalido')
+        
+        dominio_correo = correo_partes[1] #Obtenemos el dominio
+
+        if dominio_correo != self.__dominio:
+            raise ValueError('El servidor al que se esta intentando registrar solo registra usuario del dominio: ' + str(self.__dominio) + ' intente nuevamente.')
+
         usuario_nuevo = Usuario(nombre,apellido, contraseña,correo)
         self.__usuarios[correo] = usuario_nuevo# elegimos un diccionario porque podemos buscar por la clave directamente y es mas rapido que recorrer una lista entera
         return 'El usuario: ' + str(nombre) + str(apellido) + 'correo: ' + str(correo) +' Se ha registrado exitosamente.'
     
+    def get_dominio(self):
+        return self.__dominio
+
     def get_usuarios(self):
         return self.__usuarios.copy() #Por seguridad para que no haya modificaciones accidentales en el diccionario original
 

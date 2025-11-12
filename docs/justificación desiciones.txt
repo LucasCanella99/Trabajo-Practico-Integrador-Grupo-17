@@ -1,0 +1,32 @@
+Para hacer el grafo, decidimos hacer otro modulo aparte que se llama Redservidores. Lo decidimos hacer asi porque nos parecio lo más prolijo y funcional. Y no encontramos manera
+de hacer que se integre dentro de el modulo servidor ya que este mismo lo vamos a utilizar de nodo/vertice para el grafo de la red de servidores.
+En cuanto al grafo, decidimos hacerlo un grafo dirigido porque estuvimos investigando a grandes rasgos de como funciona el envio de mensajes en realidad entre distintos dominios
+de mail y no simpre se asegura que si un dominio le envia un correo a otro dominio este mismo tenga en esa arista la capacidad de responder. Descubrimos que Los Registros MX son 
+entradas en el DNS (Sistema de Nombres de Dominio) que basicamente le dicen a un dominio que si quiere enviarle un mensaje a otro dominio debe conectarse primero a X servidor y re-
+cien ahi se hace la conexion/arista en este caso y puede enviarle el mensaje. Pero esto no significa que pueda responder el receptor. Debe crear otra arista mediante el servidor ex-
+terno para hacerlo. Por eso es nuestra desicion de hacer un grafo dirigido. https://powerdmarc.com/es/what-is-a-dns-mx-record/
+En cuanto la implentacion decidimos usar la lista de adyacencia ya que para el caso de grafos dirigidos es más eficiente en el uso de memoria ya que a diferencia de la matriz de adya-
+cencia, esta solamente almacena en memoria las aristas que tengan conexiones entre vertices. Y la matriz de adyacencia no, tiene un montón de conexiones aunque no se utilicen. Lo que no
+seria eficiente para este caso. Complejidad de lista de adyacencia : O(n+m), donde n es el número de nodos y m es el número de aristas. Matriz de adyacencia : O(n)^2.
+Y para algoritmo de recorrido decidimos utilizar el BFS porque es el algoritmo que encuentra la ruta con menos aristas intermedias entre un nodo y otro. Ya que al recorrer completamente
+nivel por nivel se asegura que si hay un camino entre un nodo A y un nodo B va a ser el que tenga menos aristas intermedias.
+
+Para hacer poder hacer la BFS en el grafo importamos el modulo collections. Para no tener que implementar manualmente una cola como una lista doblemente enlazada. Ya que este 
+modulo nos permite utilizarla sin escribir todo el codigo necesario manualmente. Y sus operaciones tienen una eficiencia de O(1). Decidimos hacer esto logicamente para ganar tiempo, que 
+el codigo quede mas legible y porque suponemos que esta permitido ya que para hacer la cola de prioridades nos permitio usar el modulo heapq.
+
+Para modelar el grafo vamos a hacer que todo este ya predefinido, intentando simular como se comporta en la vida real la red de servidores, ya que tiene que ser una estructura de datos fija,
+el usuario no puede definir las aristas/conexiones. De eso se encarga el ingeniero o programador que este a cargo para configurar la red de que servidor lo puede enviar a un mensaje a otro y eso. 
+Al estar todo predefinido el usuario simplemente se registra en un dominio en especifico y envía mensajes(aparte de definir sus carpetas, etc) nada maś. Con predefinido nos referimos a que los 
+dominios van a estar ya definidos antes de ejecutar la interfaz en un modulo de pruebas main.py. No predefinidos en el modulo redservidores.
+
+En el cosntructor las conexiones las hacemos como un diccionario ya que el tiempo de busqueda es de O(1) ya que busca por nombre(clave) y no por valor que seria un costo de O(n).
+
+Costo y explicacion metodos:
+
+agregar_servidor(), almacenamos los dominios como set en la lista de adyacencia. Porque el set se almacena como conjunto en el diccionario(lista de adyacencia), con dominio y conexiones. 
+Es altamente eficiente porque mantiene la estructura del diccionario y no agrega conjuntos duplicados(ahorra espacio). Manteniendo la eficiencia de busqueda e insercion en O(1).
+
+agregar_conexion(), verifica primero que ambos dominios, origen y destino existan en la red y luego, accede a la lista de adyacencias buscando el origen y le agrega a su conexion con .add()
+el destino. Todo manteniendo la eficiencia O(1).
+
