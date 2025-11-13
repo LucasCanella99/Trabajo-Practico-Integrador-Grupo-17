@@ -12,7 +12,7 @@ class RedServidores:
         if origen not in self.__conexiones:
             raise ValueError('El servidor de origen: ' + str(origen) + 'no está registrado.')
         if destino not in self.__conexiones:
-            raise ValueError('El servidor de destino: ' + str(origen) + 'no está registrado.')
+            raise ValueError('El servidor de destino: ' + str(destino) + 'no está registrado.')
         #Agregamos la arista si pasó la verificación previa
 
         self.__conexiones[origen].add(destino) #Agregamos el servidor con su conexion a la lista de adyacencias

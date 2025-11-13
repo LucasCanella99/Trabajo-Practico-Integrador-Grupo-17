@@ -91,7 +91,7 @@ class Usuario:
       self.reglas_filtrado.append(regla)#Agregamos la regla a la lista de reglas de filtrado
 
    def aplicar_filtro(self, mensaje):#Metodo auxiliar
-      asunto = mensaje.asunto.lower() #"extraemos" el asunto del mensaje en minusculas para evitar errrores.
+      asunto = mensaje._asunto.lower() #"extraemos" el asunto del mensaje en minusculas para evitar errrores.
       for palabra_clave, carpeta_destino in self.reglas_filtrado:
           if palabra_clave in asunto:
               return carpeta_destino
