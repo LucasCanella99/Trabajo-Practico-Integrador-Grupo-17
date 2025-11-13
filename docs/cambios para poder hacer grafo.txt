@@ -3,4 +3,4 @@ hicimos que como parametro todas las instancias de servidor tengan el mismo para
 utilicen el mismo mapa topografico de la red de servidores y no cada uno una instancia separada y se pueda hacer la simulacion del enrutamiento de mensajes.
 El cambio que hicimos en el metodop enviar_mensaje() fue que se pueda enviar y recibir mensajes a nivel local osea en el mismo servidor. Pero que a nivel externo en el enrutamiento solo se
 pueda hacer la simulacion de envio mostrando la ruta utilizando el metodo encontrar_ruta() de RedServidores. No pudimos hacer que se envien y guarden mensajes entre dsintintos servidores más alla
-de la simulación del enrutamiento.
+de la simulación del enrutamiento. Lo logramos haciendo .join() con el BFS en el caso que sea un envio de mensaje a un servidor externo.

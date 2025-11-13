@@ -1,0 +1,18 @@
+Para hacer el menu lo que decidimos hacer es hacer un modulo aparte con un menu de linea de comandos. Que va  a funcionar mediante inputs del usuario. Decidimos hacerlo asi porque
+va a usar como parametro la red de servidores, que luego le va a ser proporcioanda en main.py, que ahi se va a importar la red(que maneja el mapa topopgrafico de servidores) y el ser-
+vidor que es el que maneja toda la logica de movimiento de mensajes, registros, carpetas, etc.(utilizando funciones de la clase usuario).
+Para lograr "extraer" el objeto servidor y utilizar sus funcionalidades hicimos una funcion auxiliar en el menu que realiza eso: get_servidor() que revisa que el correo sea valido y si lo
+es extrae el dominio y luego extrae el objeto servidor asociado a ese dominio. Lo saca de un diccionario que almacena los servidores asociados a los dominios.
+
+El metodo registrar_usuario() toma los datos mediante inputs del usuario y lo que hace registra usuario es: en vez de usar self. como hace en la instancia individual del servidor. Hace que 
+se utilice la instancia de su servidor asociado a su dominio mediante la extraccion de get_servidor(). (Que lo extrae de un diccionario de distintas instancias de servidor. Cada una manejando su 
+propio diccionario de usuarios, carpetas, etc.) Y utiliza las funcionalidades de ese servidor en especifico.
+
+enviar_mensaje() el metodo enviar mensaje aplica la logica de enviar_mensaje pero en vez de utilizar el self para obtener el usuario del diccionario de la instancia servidor en especifico. Nuevamente
+utiliza get_servidor() para extraer la instancia servidor asociada al mismo dominio y ahi aplicar la logica. Y para el destinatario si es el mismo dominio no es necesario el get_usuario() una segunda
+vez porque ya el metodo "se pone en funcionamiento" al haber detectado la instancia con el remitente que es de donde se extrae primero la instancia asociada al dominio y si no es el mismo dominio se aplica
+la simulacion de enrutamiento.
+
+para listar_mensajes() tuvimos que modificar el listar_mensajes() de la clase servidor para que quede actualizado con los nuevo metodos de otras entregas de obtenet subcarpeta y listar los mensajes orde-
+nados por prioridad de Carpeta. La logica es la misma que los otros metodos se piden entradas, se obtiene el servidor asociado al correo mediante get_servidor() y se llama al listar_mensajes() de esa instancia
+Servidor en especifico

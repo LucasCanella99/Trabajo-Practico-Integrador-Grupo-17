@@ -70,7 +70,7 @@ class ServidorCorreo(InterfazBasica):
         else:
             ruta_red = self.__red_servidores.encontrar_ruta(dominio_remitente,dominio_destinatario)
             if isinstance(ruta_red, list):
-                print('Ruta para enviar mensaje: ' + '->'.join(ruta_red))  # Simulacion del envio de mensajes NIVEL EXTERNO DISTINTOS SERVIDORES
+                print('Ruta para enviar mensaje: ' + '->'.join(ruta_red))  # Simulacion(enrutamiento) del envio de mensajes NIVEL EXTERNO DISTINTOS SERVIDORES
             else:
                 raise ValueError('Error al enviar el mensaje')
         remitente.guardar_mensaje_enviado(mensaje_a_enviar)
@@ -78,33 +78,26 @@ class ServidorCorreo(InterfazBasica):
 
   
 
-    def listar_mensajes(self,correo,tipo_de_bandeja): #En este metodo agregamos como parametro tipo_de_bandeja para que devuelva la de entrada o salida
+    def listar_mensajes(self,correo,nombre_carpeta): 
         if correo not in self.__usuarios:
             raise ValueError('El usuario: ' + correo + ' no se encuentra registrado')
         
         usuario = self.__usuarios[correo]
+   
+        carpeta = usuario.raiz.obtener_subcarpeta(nombre_carpeta)
+        if carpeta is None:
+            raise ValueError('La carpeta solicitada no existe')
 
-        if tipo_de_bandeja == 'entrada':
-            bandeja = usuario.get_bandeja_entrada()
-            mensajes = bandeja.mensajes
-            if mensajes: 
-                print ('Bandeja de entrada del usuario: '+ correo + '\n') 
-                for mensaje in mensajes:
-                    print ('-'+ str(mensaje))
-            else:
-                print('La bandeja de entrada esta vacía.')
-        
-        elif tipo_de_bandeja == 'salida':
-            bandeja = usuario.get_bandeja_salida()
-            mensajes = bandeja.mensajes
-            if mensajes: 
-                print ('Bandeja de salida del usuario: '+ correo + '\n') 
-                for mensaje in mensajes:
-                    print ('-'+ str(mensaje) )
-            else:
-                print('La bandeja de salida esta vacía.')
+        mensajes = carpeta.lista_mensajes() #Metodo de Carpeta para mostrar una copia de la lista de mensajes ordenados
+
+        if mensajes: 
+            print ('Carpeta ' + str(carpeta.nombre) + ' del usuario: ' + correo + '\n') 
+            for mensaje in mensajes:
+                print ('-' + str(mensaje) ) 
         else:
-            raise ValueError('El tipo de bandeja debe ser "entrada" ó "salida"')
+            print('La carpeta esta vacía.')
+
+
 
 
     def recibir_mensaje(self,correo): # hicimos que este metodo de la cantidad de mensajes recibidos, porque enviar mensajes ya hace que el destinatario, reciba el mensaje y que listar mensaje, los muestre.
