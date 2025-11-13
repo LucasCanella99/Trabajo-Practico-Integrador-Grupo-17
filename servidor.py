@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from mensaje import Mensaje
 from usuario import Usuario
+from redservidores import RedServidores
 
 class InterfazBasica(ABC):
     @abstractmethod
@@ -19,9 +20,11 @@ class InterfazBasica(ABC):
     
 
 class ServidorCorreo(InterfazBasica):
-    def __init__(self,dominio):
+    def __init__(self,dominio,red_servidores):
         self.__usuarios = {} #Acá vamos a guardar los usuarios, con su correo
         self.__dominio = dominio #Dominio del servidor, cada nodo del grafo va a tener un dominio en especifico
+        self.__red_servidores = red_servidores 
+        self.__red_servidores.agregar_servidor(dominio) #hacemos que por defecto al crear una instancia de servidor esta se agregue a la red de servidores
 
     def registrar_usuario(self,nombre,apellido, contraseña,correo):
         if correo in self.__usuarios:
@@ -51,16 +54,27 @@ class ServidorCorreo(InterfazBasica):
 
         if 'urgente' in asunto.lower(): # Si el asunto dice por ej "Facturas urgente" le cambia la prioridad a 0
             prioridad_de_asignacion = 0
-        
-        if destinatario not in self.__usuarios:
-            raise ValueError('El destinatario no esta registrado en el sistema')
+
         if remitente not in self.__usuarios:
             raise ValueError('El remitente no esta registrado en el sistema')
-        destinatario = self.__usuarios[destinatario]#Obtenemos los objeto Usuario de destinatario y abajo de remitente
         remitente = self.__usuarios[remitente]
-        mensaje_a_enviar = Mensaje(mensaje,destinatario.correo,remitente.correo,asunto,prioridad = prioridad_de_asignacion)#Se escribe el mensaje con todo lo que requiere
-        remitente.guardar_mensaje_enviado(mensaje_a_enviar)#Guardamos en la bandeja de salida
-        destinatario.filtrar_mensaje(mensaje_a_enviar)#Lo guardamos en la bandeja de entrada del destinatario
+        mensaje_a_enviar = Mensaje(mensaje,destinatario,remitente,asunto,prioridad = prioridad_de_asignacion)#Se escribe el mensaje con todo lo que requiere
+        dominio_remitente = self.__dominio
+        dominio_destinatario = destinatario.split('@')[-1]
+        #enrutamiento
+        if dominio_remitente.lower() == dominio_destinatario.lower(): #caso que el dominio sea el mismo en ambos correos(mismo servidor) NIVEL LOCAL
+            if destinatario not in self.__usuarios:
+                raise ValueError('El destinatario no esta registrado en el sistema')
+            destinatario = self.__usuarios[destinatario]
+            destinatario.filtrar_mensaje(mensaje_a_enviar)
+        else:
+            ruta_red = self.__red_servidores.encontrar_ruta(dominio_remitente,dominio_destinatario)
+            if isinstance(ruta_red, list):
+                print('Ruta para enviar mensaje: ' + '->'.join(ruta_red))  # Simulacion del envio de mensajes NIVEL EXTERNO DISTINTOS SERVIDORES
+            else:
+                raise ValueError('Error al enviar el mensaje')
+        remitente.guardar_mensaje_enviado(mensaje_a_enviar)
+
 
   
 

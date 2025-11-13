@@ -1,5 +1,9 @@
 Para hacer el grafo, decidimos hacer otro modulo aparte que se llama redservidores. Lo decidimos hacer asi porque nos parecio lo más prolijo y funcional. Y no encontramos manera
-de hacer que se integre dentro de el modulo servidor ya que este mismo lo vamos a utilizar de nodo/vertice para el grafo de la red de servidores.
+de hacer que se integre dentro de el modulo servidor ya que este mismo lo vamos a utilizar solo para administrar los usuarios que pertenezcan a el y administrar el envio de mensajes.
+Y la redservidores contiene todos los nodos(dominios), el mapa topografico de la red de servidores(dominios) y el algoritmo BFS que vamos a usar para mostrar la simulacion de la ruta
+que hace un mensaje para llegar de un domino A a un dominio B. Una simulacion del camino que hace.
+
+
 En cuanto al grafo, decidimos hacerlo un grafo dirigido porque estuvimos investigando a grandes rasgos de como funciona el envio de mensajes en realidad entre distintos dominios
 de mail y no simpre se asegura que si un dominio le envia un correo a otro dominio este mismo tenga en esa arista la capacidad de responder. Descubrimos que Los Registros MX son 
 entradas en el DNS (Sistema de Nombres de Dominio) que basicamente le dicen a un dominio que si quiere enviarle un mensaje a otro dominio debe conectarse primero a X servidor y re-
@@ -15,10 +19,7 @@ Para hacer poder hacer la BFS en el grafo importamos el modulo collections. Para
 modulo nos permite utilizarla sin escribir todo el codigo necesario manualmente. Y sus operaciones tienen una eficiencia de O(1). Decidimos hacer esto logicamente para ganar tiempo, que 
 el codigo quede mas legible y porque suponemos que esta permitido ya que para hacer la cola de prioridades nos permitio usar el modulo heapq.
 
-Para modelar el grafo vamos a hacer que todo este ya predefinido, intentando simular como se comporta en la vida real la red de servidores, ya que tiene que ser una estructura de datos fija,
-el usuario no puede definir las aristas/conexiones. De eso se encarga el ingeniero o programador que este a cargo para configurar la red de que servidor lo puede enviar a un mensaje a otro y eso. 
-Al estar todo predefinido el usuario simplemente se registra en un dominio en especifico y envía mensajes(aparte de definir sus carpetas, etc) nada maś. Con predefinido nos referimos a que los 
-dominios van a estar ya definidos antes de ejecutar la interfaz en un modulo de pruebas main.py. No predefinidos en el modulo redservidores.
+
 
 En el cosntructor las conexiones las hacemos como un diccionario ya que el tiempo de busqueda es de O(1) ya que busca por nombre(clave) y no por valor que seria un costo de O(n).
 
@@ -37,3 +38,7 @@ en su lista de conexiones, se agrega al set de visitados la conexion actual para
 con esa conexion actual y la ruta actual hasta el momento y se la guarda como una tupla en la cola. Se realiza este proceso iterativamente hasta encontrar la ruta que coincida con el destino y de esta manera se
 asegura que la ruta que se retorne sea la que tenga menos vertices/nodos(en este caso dominios(servidor)) intermedios. Esto se logra al explorar nivel por nivel completo antes de pasar al siguiente.
 
+Implementacion Para modelar el grafo vamos a hacer que todo este ya predefinido, intentando simular como se comporta en la vida real la red de servidores, ya que tiene que ser una estructura de datos fija,
+el usuario no puede definir las aristas/conexiones. De eso se encarga el ingeniero o programador que este a cargo para configurar la red de que servidor lo puede enviar a un mensaje a otro y eso. 
+Al estar todo predefinido el usuario simplemente se registra en un dominio en especifico y envía mensajes(aparte de definir sus carpetas, etc) nada maś. Con predefinido nos referimos a que los 
+dominios van a estar ya definidos antes de ejecutar la interfaz en un modulo de pruebas main.py. No predefinidos en el modulo redservidores.
