@@ -31,7 +31,7 @@ class Carpeta:
         resultados = []                             
         for mensaje in self.mensajes:
             mensaje_objeto = mensaje[1] #Desempaquetamos la tupla para que pueda acceder al asunto del objeto mensaje, la tupla se crea cuando se hace el .heappush en agregar_mensaje
-            if criterio_de_busqueda in  mensaje_objeto._asunto or criterio_de_busqueda in mensaje_objeto._remitente:
+            if criterio_de_busqueda in  mensaje_objeto._asunto.lower() or criterio_de_busqueda in mensaje_objeto._remitente.lower():
                 resultados.append(mensaje_objeto)
 
         for subcarpeta in self.subcarpetas.values():
@@ -62,20 +62,22 @@ class Carpeta:
         if not isinstance(mensaje,Mensaje):
             raise TypeError('Solo se pueden eliminar mensajes de tipo Mensaje')
             
-        try:
-            self.mensajes.remove(mensaje)
-        except ValueError:
-            print('No se a encontrado el mensaje a eliminar')
+        for i, tupla_mensaje in enumerate(self.mensajes):
+            if tupla_mensaje[1] is mensaje:
+                self.mensajes.pop(i)
+                heapq.heapify(self.mensajes)
+                return
+        print('No se encontró el mensaje a eliminar')
 
     def obtener_carpeta(self,mensaje):
-        if mensaje in self.mensajes:
-            return self #Devuelve la carpeta donde esta el mensaje,si es la primera(raiz)
-        
-        for subcarpeta in self.subcarpetas.values():#Busca en las subcarpetas recursivamente
-            carpeta_actual = subcarpeta.obtener_carpeta(mensaje)
-            if carpeta_actual is not None:
-                return carpeta_actual #Si lo encontro retorna la carpeta de origen 
-        return None#No lo encontro en ninguna subcarpeta    
+        for tupla_mensaje in self.mensajes:
+            if tupla_mensaje [1] is mensaje:
+                return self
+        for subcarpeta in self.subcarpetas.values():
+            resultado = subcarpeta.obtener_carpeta(mensaje)
+            if resultado is not None:
+                return resultado
+        return None
     
     #Damos por entendido que el usuario introduce el mensaje que quiere mover,ahi si aplicamos recursión para encontrar la subcarpeta.Origen
     #Pero tambien damos por entendido que el usuario ya sabe a donde quiere mover el mensaje y el mismo da el destino.
