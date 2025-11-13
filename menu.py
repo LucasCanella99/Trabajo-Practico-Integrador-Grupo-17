@@ -6,7 +6,7 @@ class Menu:
         try:
             dominio = correo.split('@')[-1].lower()
         except IndexError:
-            raise ValueError('El correo debe conter @. Ingrese un correo válido.')
+            raise ValueError('El correo debe contener @. Ingrese un correo válido.')
         
         if dominio in self.__servidores_en_uso:
             return self.__servidores_en_uso[dominio]

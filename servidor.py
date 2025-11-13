@@ -16,6 +16,16 @@ class InterfazBasica(ABC):
     @abstractmethod
     def recibir_mensaje(self,correo):
         pass
+    @abstractmethod
+    def crear_subcarpeta_principal(self,correo,nombre):
+        pass
+    @abstractmethod
+    def crear_subcarpeta_anidada(self,correo,nombre,nombre_carpeta_padre):
+        pass
+    @abstractmethod
+    def mover_mensaje(self,correo,asunto,destino):
+        pass
+
 
     
 
@@ -110,6 +120,46 @@ class ServidorCorreo(InterfazBasica):
 
         return 'El usuario ' + str(correo) + ' tiene: ' + str(cantidad_mensajes) + ' mensajes.'
 
+    def crear_subcarpeta_principal(self,correo,nombre):
+        if correo not in self.__usuarios:
+            raise ValueError('El usuario: ' + correo + ' .No se encuentra registrado')
+        
+        usuario = self.__usuarios[correo]
+
+        try:
+            usuario.raiz.agregar_subcarpeta(nombre)
+        except ValueError as e:
+            raise ValueError(f"Error: {e}")
+        
+    def crear_subcarpeta_anidada(self,correo,nombre,nombre_carpeta_padre):
+        if correo not in self.__usuarios:
+            raise ValueError('El usuario: ' + correo + ' .No se encuentra registrado')
+        
+        usuario = self.__usuarios[correo]
+
+        try:
+            usuario.crear_subcarpeta_anidada(nombre,nombre_carpeta_padre)
+        except ValueError as e:
+            raise ValueError(f"Error: {e}")
+    
+    def mover_mensaje(self,correo,asunto,destino):
+        if correo not in self.__usuarios:
+            raise ValueError('El usuario: ' + correo + ' .No se encuentra registrado')
+        
+        usuario = self.__usuarios[correo]
+
+        mensaje_coincidiente = usuario.raiz.buscar_mensajes(asunto)
+
+        if not mensaje_coincidiente:
+            raise ValueError('No se encontró un mensaje que coincida con el asunto ingresado.')
+        
+        mensaje = mensaje_coincidiente[0] #Vamos a hacer que se mueva el pirmer mensaje encontrado con el asunto introducido
+        carpeta_destino = usuario.raiz.obtener_subcarpeta(destino)
+
+        if carpeta_destino is None:
+            raise ValueError('La carpeta de destino no coincide')
+        
+        usuario.raiz.mover_mensaje(mensaje,carpeta_destino)
 
 
         
