@@ -16,3 +16,21 @@ la simulacion de enrutamiento.
 para listar_mensajes() tuvimos que modificar el listar_mensajes() de la clase servidor para que quede actualizado con los nuevo metodos de otras entregas de obtenet subcarpeta y listar los mensajes orde-
 nados por prioridad de Carpeta. La logica es la misma que los otros metodos se piden entradas, se obtiene el servidor asociado al correo mediante get_servidor() y se llama al listar_mensajes() de esa instancia
 Servidor en especifico
+
+para crear_subcarpeta_principal() tuvimos que crear el metodo previamente en Servidor para delegarlo a la interfaz luego, utilizamos el metodo agregar_subcarpeta() de Carpeta en la carpeta principal del usuario(raiz) mediante
+las entradas del usuario para crear la subcarpeta de la carpeta principal. Siempre usando el get_servidor() para obtener el servidor correspondiente al dominio del correo del usuario
+
+para crear_subcarpeta_anidada() creamos tambien el nuevo metodo previamente en Servidor, utilizando el metodo crear_subcarpeta_anidada() de Usuario. Utilizando el get_servidor() y  mediante entradas del usuario se 
+crea la subcarpeta anidada de la carpeta que quiera el usuario.
+
+para mover_mensaje() con el metodo previamente creado en Servidor y usando get_servidor(). Reutilizamos el metodo mover_mensaje() de Carpeta y el metodo buscar_mensajes() de Carpeta para usar el primero del asunto
+solicitado como Objeto mensaje y obtener_subcarpeta() para obtener el objeto Carpeta especificado como nombre en la entrada por el usuario.
+
+contador_mensaje() Reutilizamosel recibir_mensaje() de Servidor, es un simple contador de mensajes en la bandeja principal.
+
+Para la ejecucion de lainterfaz grafica de comandos hicimos que se imprima en consola un menu con todas las opciones disponibles y que mediante inputs un usuario primero elija la opcion despues la funcion que quiera 
+utilizar, una opcion para una eleccion erronea o cuando quiera salir de la interfaz. Todo esto mediante un bucle con while.
+
+Para probar el programa hicimos un modulo de pruebas main.py donde creamos las instancias de los servidores(dominios) y que luego utilicen todos la misma red gracias al parametro del constructor de Servidor ya que 
+esta pensado para que al crear una instancia tengan todos la misma variable sino crearia un mapa topografico distinto para cada uno y no se podria hacer la simulacion a un nivel externo, solo a un nivel local de cada 
+servidor

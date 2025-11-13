@@ -162,8 +162,7 @@ class ServidorCorreo(InterfazBasica):
         usuario.raiz.mover_mensaje(mensaje,carpeta_destino)
 
 
-        
-
+    
         
         
 
