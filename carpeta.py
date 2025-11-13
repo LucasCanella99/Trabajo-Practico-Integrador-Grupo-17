@@ -27,10 +27,12 @@ class Carpeta:
     
     def buscar_mensajes(self,criterio_de_busqueda): #Hace una busqueda recursiva, primero en la raiz, y luego recursivamente en las subcarpetas
                                                     # y agrega todos los mensajes coincidentes en resultados y finalmente lo retorna
+        criterio_de_busqueda = criterio_de_busqueda.lower()
         resultados = []                             
         for mensaje in self.mensajes:
-            if criterio_de_busqueda in  mensaje.asunto or criterio_de_busqueda in mensaje.remitente:
-                resultados.append(mensaje)
+            mensaje_objeto = mensaje[1] #Desempaquetamos la tupla para que pueda acceder al asunto del objeto mensaje, la tupla se crea cuando se hace el .heappush en agregar_mensaje
+            if criterio_de_busqueda in  mensaje_objeto._asunto or criterio_de_busqueda in mensaje_objeto._remitente:
+                resultados.append(mensaje_objeto)
 
         for subcarpeta in self.subcarpetas.values():
             busqueda_recursiva = subcarpeta.buscar_mensajes(criterio_de_busqueda)

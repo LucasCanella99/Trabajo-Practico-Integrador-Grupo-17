@@ -67,7 +67,7 @@ class ServidorCorreo(InterfazBasica):
 
         if remitente not in self.__usuarios:
             raise ValueError('El remitente no esta registrado en el sistema')
-        remitente = self.__usuarios[remitente]
+        usuario_remitente = self.__usuarios[remitente]
         mensaje_a_enviar = Mensaje(mensaje,destinatario,remitente,asunto,prioridad = prioridad_de_asignacion)#Se escribe el mensaje con todo lo que requiere
         dominio_remitente = self.__dominio
         dominio_destinatario = destinatario.split('@')[-1]
@@ -75,15 +75,15 @@ class ServidorCorreo(InterfazBasica):
         if dominio_remitente.lower() == dominio_destinatario.lower(): #caso que el dominio sea el mismo en ambos correos(mismo servidor) NIVEL LOCAL
             if destinatario not in self.__usuarios:
                 raise ValueError('El destinatario no esta registrado en el sistema')
-            destinatario = self.__usuarios[destinatario]
-            destinatario.filtrar_mensaje(mensaje_a_enviar)
+            usuario_destinatario = self.__usuarios[destinatario]
+            usuario_destinatario.filtrar_mensaje(mensaje_a_enviar)
         else:
             ruta_red = self.__red_servidores.encontrar_ruta(dominio_remitente,dominio_destinatario)
             if isinstance(ruta_red, list):
                 print('Ruta para enviar mensaje: ' + '->'.join(ruta_red))  # Simulacion(enrutamiento) del envio de mensajes NIVEL EXTERNO DISTINTOS SERVIDORES
             else:
                 raise ValueError('Error al enviar el mensaje')
-        remitente.guardar_mensaje_enviado(mensaje_a_enviar)
+        usuario_remitente.guardar_mensaje_enviado(mensaje_a_enviar)
 
 
   
