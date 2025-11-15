@@ -1,6 +1,0 @@
-hicimos un pequeño cambio en la cola de prioridad al ser que se implementa con el modulo heapq como una minheapq. Es decir
-el de menor valor arriba cerca de la raiz. Habiamos puesto anteriormente cuando se enviaba un mensaje que por defecto sea 0
-y que si contenia urgente en el asunto sea 1. Pero al hacer el reordenamiento de la lista de mensajes siempre iba a quedar el
-mensaje normal arriba ya que tenia menor valor. Se nos habia ocurrido cambiarle el signo a urgente al momento de agregar el mensaje
-para que sea menor que 0 y quede más arriba en el ordenamiento. Pero a ultimo momento se nos ocurrio que simplemente mensaje normal
-sea 1 y urgente 0. Sin necesidad de cambiar el signo, es un cambio chico pero queda el codigo más limpio y legible.
