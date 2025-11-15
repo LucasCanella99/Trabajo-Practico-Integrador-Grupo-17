@@ -1,7 +1,0 @@
-En el servidor decidimos aparte de el metodo de registrar usuario hacer tambien los metodos que se pedian en la interfaz(enviar mensaje, recibir
-mensaje y listar mensajes). Para que sea el que gestione todo y luego interfazz hacerlo en otro modulo aparte haciendo que importe la clase Ser-
-vidorCorreo y que solamente llame a los metodos que contiene. Creemos que es lo correcto para hacer una interfaz.
-Para solucionar lo de llamar a la interfaz para bandeja de entrada o salida. Decidimos hacer dos listar mensajes en servidor correo, uno para bandeja
-de entrada y otro para bandeja de salida. Para luego poder llamarlos en interfaz a cada uno por separado
-Correción: Habiamos confundio una interafaz de menu(Que ya removimos) con la interfaz abstracta requerida. Por lo que ya se integro eso en el servidor
-con todas las modificaciones correspondientes para que funcione el servidor con todo lo requerido.
