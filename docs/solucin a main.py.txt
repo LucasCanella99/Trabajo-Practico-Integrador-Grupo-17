@@ -1,8 +1,0 @@
-Al hacer el archivo de prueba nos dimos cuenta que no funcionaba la logica de mover mensajes porque estaba diseñado para mover el mensaje directam,ente(osea eliminarlo y moverlo a una nueva carpeta)
-Nos daba el error que no encontraba el mensaje ya que al objeto que estabamos intentando acceder era una tupla. Ya que al usar heapq para hacer la cola de prioridades ahora el mensaje era una tupla
-con (valor,mensaje). Para solucionarlo tuvimos que modificar varios metodos de la logica de busqueda y movimiento para acceder al objeto mensaje de la tupla el que mas se nos complico y es el de eliminar
-mensaje ya que teniamos que iterar soibre la lista de mensajes que ahora eran tuplas, encontra el objeto [1] de la tupla en la lista y ver si coincidia(el asunto) si coincidia lo eliminabamos con pop y
-usabamos heapq.heapify para amntener la estructura de heapq(cola de prioridad) en la lista de mensajes de la clase Carpeta. Esto se usa cuando se quita "manualmente" un elemnto de la estructura de la cola
-y que se reordene. Ya que no lo hace cuando se hace manualmente. Y al hacerlo con heappush y heappop si.
-Tambien se hicieron modificaciones en buscar_mensaje y obtener_carpeta. Intentando ingresar al objeto 1 de la tupla y si no se eoncontraba en un primer nivel aplicar la busqueda recursiva en subcarpetas.
-Utilizamos ennumerate para convertir la lista en un iterable con psiciones y poder eliminar la tupla completa y luego reordenar con heapify
